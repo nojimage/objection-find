@@ -299,6 +299,20 @@ describe('integration tests', () => {
                 ]);
               });
           });
+
+          it("should return persons whose have no parent or whose parent's firstName match the given string", function () {
+            return objectionFind(Person)
+                .build({
+                  'parent.firstName:inWithNull': 'F02,F04',
+                })
+                .then(function (result) {
+                  expect(_.invokeMap(result, 'fullName').sort()).to.eql([
+                    'F00 L09',
+                    'F03 L06',
+                    'F05 L04',
+                  ]);
+                });
+          });
         });
 
         describe('one to many relation', function () {
